@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#1F3864">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Daybook Pro">
+<link rel="manifest" id="pwa-manifest">
+<title>📒 DAYBOOK PRO - Ultimate Edition</title>
+<style>
+/* ========== ORIGINAL STYLES (COMPLETELY INTACT) ========== */
+:root{--nv:#1F3864;--bl:#2E75B6;--lb:#EBF3FB;--hb:#D9E2F3;--gd:#375623;--gt:#006600;--gr:#595959;--rd:#c0392b;--yl:#FFF2CC;--bc:#e2e8f0;--sf:#f4f7fb;--ra:12px;--sh:0 2px 12px rgba(0,0,0,.08)}
+/* Theme variables */
+[data-theme="dark"]{--nv:#1a1a2e;--bl:#16213e;--lb:#1f1f2f;--hb:#2a2a3a;--gd:#2e7d32;--gt:#4caf50;--gr:#b0b0b0;--rd:#ef5350;--yl:#4a3a1a;--bc:#333344;--sf:#1a1a2e;--sh:0 2px 12px rgba(0,0,0,.3)}
+[data-theme="dark"] body{background:#1a1a2e;color:#e0e0e0}
+[data-theme="dark"] .ec, [data-theme="dark"] .sum-card, [data-theme="dark"] .dp, [data-theme="dark"] .rt-pnl, [data-theme="dark"] .ag-card, [data-theme="dark"] .sch-item{background:#2a2a3a;border-color:#444}
+[data-theme="dark"] .si, [data-theme="dark"] .fg input, [data-theme="dark"] .fg select{background:#333344;color:#e0e0e0;border-color:#555}
+[data-theme="dark"] .dr:nth-child(odd){background:#2a2a3a}
+[data-theme="dark"] .dr:nth-child(even){background:#333344}
+[data-theme="dark"] .tag-code{background:#1a3a1a}
+[data-theme="dark"] .tag-scheme{background:#2a1a4a}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:13px;background:var(--sf);color:#1a1a2e;display:flex;flex-direction:column;transition:background .3s,color .3s}
+.hdr{background:var(--nv);padding:10px 14px 0;flex-shrink:0}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.logo{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.logo span{color:#7EC8E3}
+.logo-sub{font-size:9px;color:rgba(255,255,255,.5);display:block;margin-top:1px;letter-spacing:.3px}
+.hdr-right{text-align:right}
+.hdr-date{font-size:11px;color:rgba(255,255,255,.6);font-weight:500}
+.hdr-month{font-size:12px;color:#7EC8E3;font-weight:700}
+.bk-warn{background:rgba(255,200,0,.15);border:1px solid rgba(255,200,0,.3);border-radius:6px;padding:5px 10px;font-size:10px;color:#ffd700;text-align:center;margin-bottom:6px;display:none}
+.bk-warn.show{display:block}
+.pwa-bar{background:rgba(126,200,227,.2);border:1px solid rgba(126,200,227,.4);border-radius:6px;padding:6px 10px;margin-bottom:6px;display:none;align-items:center;justify-content:space-between;gap:8px}
+.pwa-bar.show{display:flex}
+.tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.1)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:9px 13px 7px;color:rgba(255,255,255,.5);font-size:10px;font-weight:700;cursor:pointer;border:none;border-bottom:3px solid transparent;white-space:nowrap;background:none;transition:.2s;letter-spacing:.5px;text-transform:uppercase}
+.tab.on{color:#fff;border-bottom-color:#7EC8E3}
+.main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px;padding-bottom:70px}
+.page{display:none}
+.page.on{display:block}
+.shdr{background:var(--nv);color:#fff;font-weight:700;font-size:13px;text-align:center;padding:9px 12px;border-radius:var(--ra) var(--ra) 0 0}
+.ssub{background:var(--hb);color:var(--gr);font-size:10px;text-align:center;padding:5px 10px;border-bottom:1px solid var(--bc);line-height:1.4}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:10px 12px;border:none;border-radius:9px;font-weight:700;font-size:11.5px;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.b-blue{background:var(--bl);color:#fff;box-shadow:0 2px 8px rgba(46,117,182,.25)}
+.b-green{background:var(--gd);color:#fff}
+.b-amber{background:#b45309;color:#fff}
+.b-slate{background:#475569;color:#fff}
+.b-purple{background:#7c3aed;color:#fff}
+.b-teal{background:#0d9488;color:#fff}
+.b-pink{background:#db2777;color:#fff}
+.b-full{width:100%}
+.brow{display:flex;gap:6px;margin-bottom:7px}
+.brow .btn{flex:1}
+.tots{background:linear-gradient(135deg,#1F3864,#2d4a7a);border-radius:var(--ra);padding:11px 13px;margin:10px 0 8px}
+.tots-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.5);margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
+.tots-title a{color:#7EC8E3;font-size:11px;cursor:pointer;text-transform:none;letter-spacing:0;text-decoration:none}
+.tots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tc{background:rgba(255,255,255,.08);border-radius:8px;padding:7px 4px;text-align:center}
+.tc-l{font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
+.tc-v{font-size:12px;font-weight:800;color:#fff}
+.tc-v.g{color:#6ee7b7}.tc-v.r{color:#fca5a5}
+/* NEW: Insights Dashboard */
+.insights-dashboard{background:linear-gradient(135deg,#1F3864,#2d4a7a);border-radius:var(--ra);padding:10px;margin-bottom:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.insight-card{text-align:center}
+.insight-label{font-size:8px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px}
+.insight-value{font-size:14px;font-weight:800;color:#fff}
+.insight-value.small{font-size:11px}
+.insight-value.warning{color:#fca5a5}
+/* NEW: Quick Action FAB */
+.fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:28px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;box-shadow:0 4px 12px rgba(0,0,0,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;z-index:100;transition:.2s}
+.fab:active{transform:scale(.92)}
+.fab-menu{position:fixed;bottom:90px;right:20px;display:none;flex-direction:column;gap:8px;z-index:99}
+.fab-menu.show{display:flex}
+.fab-item{width:48px;height:48px;border-radius:24px;background:var(--bl);color:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.2s}
+.fab-item:active{transform:scale(.9)}
+/* NEW: Filter Chips */
+.filter-chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;padding-bottom:2px}
+.filter-chip{flex:0 0 auto;padding:4px 10px;border-radius:15px;font-size:9px;font-weight:700;background:#fff;border:1px solid var(--bc);color:#64748b;cursor:pointer}
+.filter-chip.active{background:var(--bl);color:#fff;border-color:var(--bl)}
+/* NEW: Checklist */
+.checklist-card{background:#fff;border-radius:var(--ra);padding:10px;margin-bottom:10px;border:2px solid var(--gd);display:none}
+.checklist-card.show{display:block}
+.checklist-title{font-size:10px;font-weight:800;color:var(--gd);margin-bottom:6px}
+.checklist-item{font-size:10px;padding:4px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid #f0f0f0}
+.checklist-item:last-child{border-bottom:none}
+.checklist-dot{width:6px;height:6px;border-radius:3px;background:var(--gd)}
+.checklist-dot.warning{background:#f59e0b}
+.checklist-dot.danger{background:var(--rd)}
+/* NEW: Voice Input */
+.voice-btn{background:linear-gradient(135deg,#667eea,#764ba2);border:none;border-radius:20px;padding:8px 12px;color:#fff;font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.voice-btn.listening{background:linear-gradient(135deg,#ef4444,#dc2626);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+/* NEW: PIN Lock Screen */
+.pin-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+.pin-overlay.show{display:flex}
+.pin-title{font-size:20px;margin-bottom:20px}
+.pin-display{font-size:32px;letter-spacing:15px;margin-bottom:20px;background:rgba(255,255,255,.1);padding:10px 20px;border-radius:10px}
+.pin-grid{display:grid;grid-template-columns:repeat(3,80px);gap:10px;margin-bottom:20px}
+.pin-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:40px;padding:15px;font-size:20px;color:#fff;cursor:pointer}
+.pin-btn:active{background:rgba(255,255,255,.2)}
+/* NEW: Theme Selector */
+.theme-selector{display:flex;gap:8px;margin-bottom:10px}
+.theme-option{padding:4px 10px;border-radius:15px;font-size:10px;cursor:pointer;background:#e2e8f0;color:#475569}
+.theme-option.active{background:var(--bl);color:#fff}
+/* NEW: Locker Movement Quick Entry */
+.locker-quick{background:linear-gradient(135deg,#0d9488,#0f766e);border-radius:12px;padding:8px 12px;margin-bottom:10px;color:#fff}
+.locker-quick-row{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.locker-quick select,.locker-quick input{flex:1;padding:6px 8px;border:none;border-radius:6px;font-size:11px;background:rgba(255,255,255,.95)}
+.locker-quick-btn{background:#FFD700;color:#0d9488;border:none;border-radius:6px;padding:6px 12px;font-weight:700;font-size:11px;cursor:pointer}
+/* Original styles continue */
+.sw{position:relative;margin-bottom:7px}
+.si{width:100%;padding:9px 34px 9px 13px;border:1.5px solid var(--bc);border-radius:10px;font-size:14px;background:#fff;color:#222;transition:.2s}
+.si:focus{outline:none;border-color:var(--bl);box-shadow:0 0 0 3px rgba(46,117,182,.1)}
+.si-ico{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:14px;pointer-events:none}
+.chips{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;margin-bottom:7px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;border:1.5px solid var(--bc);background:#fff;color:#64748b;cursor:pointer;transition:.15s}
+.chip.on{background:var(--nv);color:#fff;border-color:var(--nv)}
+.seg{display:flex;background:#e2e8f0;border-radius:9px;padding:3px;margin-bottom:8px}
+.seg-b{flex:1;padding:6px 0;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#64748b;transition:.15s}
+.seg-b.on{background:#fff;color:var(--nv);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.dg{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 4px;margin-top:6px}
+.dg:first-child{margin-top:0}
+.dg-l .dg-d{font-size:12px;font-weight:800;color:var(--nv)}
+.dg-l .dg-s{font-size:10px;color:var(--gr)}
+.dg-r{font-size:11px;font-weight:700;color:var(--gd)}
+.day-bk{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:6px;padding:0 2px}
+.day-bk-cell{border-radius:7px;padding:5px 6px;text-align:center}
+.day-bk-l{font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px}
+.day-bk-v{font-size:11px;font-weight:800}
+.ec{background:#fff;border-radius:var(--ra);padding:11px 12px;border:1px solid var(--bc);box-shadow:var(--sh);margin-bottom:7px}
+.ec-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.ec-main{flex:1;min-width:0}
+.ec-head{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px}
+.ec-title{font-size:13px;font-weight:800;color:var(--nv)}
+.ec-sn{font-size:9px;background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:5px;font-weight:700}
+.ec-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:2px}
+.tag{font-size:9px;padding:2px 6px;border-radius:5px;font-weight:700;white-space:nowrap}
+.tag-code{color:var(--gt);background:#f0fdf4}
+.tag-scheme{color:#7c3aed;background:#f5f3ff}
+.tag-na{color:#b45309;background:#fef3c7}
+.tag-note{color:#64748b;background:#f1f5f9;font-style:italic}
+.tag-pending{color:#dc2626;background:#fee2e2}
+.ec-acts{display:flex;gap:4px;flex-shrink:0;margin-left:6px}
+.ib{width:28px;height:28px;border-radius:7px;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.ib:active{transform:scale(.88)}
+.ib.ed{background:#eff6ff;color:var(--bl)}
+.ib.du{background:#f0fdf4;color:var(--gt)}
+.ib.dl{background:#fff1f2;color:var(--rd)}
+.ec-amts{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.ca{background:#f8fafc;border-radius:7px;padding:6px 4px;text-align:center}
+.ca-l{font-size:8px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.ca-v{font-size:12px;font-weight:800}
+.v-ci{color:#15803d}.v-bi{color:var(--bl)}.v-li{color:var(--nv)}.v-cp{color:var(--rd)}.v-lp{color:#92400e}.v-z{color:#cbd5e1}
+.empty{text-align:center;padding:40px 20px;color:#94a3b8}
+.empty-ico{font-size:40px;margin-bottom:10px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--bc);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:700px;font-size:11px}
+th{background:var(--bl);color:#fff;font-weight:700;padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,.15);white-space:nowrap;position:sticky;top:0;z-index:5}
+td{padding:6px;border:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap}
+tr:nth-child(odd) td{background:var(--lb)}
+.tr{text-align:right}.tc2{text-align:center}.tg{color:var(--gt);font-weight:600}.tb{color:var(--bl);font-weight:700}.tn{color:var(--nv);font-weight:600}.tdim{color:#cbd5e1;text-align:right}
+tfoot td{background:var(--bl)!important;color:#fff!important;font-weight:700;text-align:right;border:1px solid rgba(255,255,255,.2)}
+tfoot td:first-child{background:var(--nv)!important;text-align:left}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:800;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+.mo{background:#fff;border-radius:20px 20px 0 0;padding:16px 16px 30px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;animation:su .22s ease}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mo-hnd{width:36px;height:4px;background:#e2e8f0;border-radius:2px;margin:0 auto 14px}
+.mo-ttl{font-size:15px;font-weight:800;color:var(--nv);margin-bottom:14px;text-align:center}
+.cb{background:#fff;border-radius:20px 20px 0 0;padding:24px 20px 30px;width:100%;max-width:440px;animation:su .22s ease;text-align:center}
+.cb-ico{font-size:36px;margin-bottom:10px}
+.cb-ttl{font-size:16px;font-weight:800;color:var(--nv);margin-bottom:6px}
+.cb-msg{font-size:12px;color:#64748b;line-height:1.6;margin-bottom:14px;white-space:pre-line;text-align:left}
+.cb-acts{display:flex;gap:9px}
+.fg{margin-bottom:10px}
+.fg label{display:block;font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fg input,.fg select{width:100%;padding:10px 12px;border:1.5px solid var(--bc);border-radius:9px;font-size:14px;color:#1a1a2e;background:#fff;-webkit-appearance:none;appearance:none;transition:.2s;font-family:inherit}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--bl);box-shadow:0 0 0 3px rgba(46,117,182,.1)}
+.fg input[type=number]{-moz-appearance:textfield}
+.fg input[type=number]::-webkit-inner-spin-button,.fg input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.ma{display:flex;gap:8px;margin-top:14px}
+.bsave{flex:2;padding:13px;background:var(--nv);color:#fff;font-weight:800;font-size:14px;border:none;border-radius:10px;cursor:pointer}
+.bsave:active{transform:scale(.97)}
+.bcancel{flex:1;padding:13px;background:#f1f5f9;color:#475569;font-weight:700;font-size:13px;border:none;border-radius:10px;cursor:pointer}
+.acw{position:relative}
+.acl{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--bl);border-top:none;border-radius:0 0 10px 10px;max-height:190px;overflow-y:auto;z-index:900;display:none;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.acl.on{display:block}
+.aci{padding:10px 12px;cursor:pointer;font-size:13px;font-weight:600;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center}
+.aci:active{background:var(--lb)}
+.aci small{color:var(--gt);font-size:10px;font-weight:700;background:#f0fdf4;padding:2px 6px;border-radius:5px}
+.hint-box{border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;font-weight:600}
+.hint-green{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d}
+.hint-amber{background:#fef3c7;border:1px solid #fde68a;color:#92400e}
+.sum-card{background:#fff;border-radius:var(--ra);overflow:hidden;border:1px solid var(--bc);box-shadow:var(--sh);margin-bottom:12px}
+.sum-hrow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;background:var(--bl);color:#fff;font-size:10px;font-weight:800;text-align:center;text-transform:uppercase;letter-spacing:.3px}
+.shc{padding:9px 4px;border-right:1px solid rgba(255,255,255,.2)}
+.shc:last-child{border-right:none}
+.sum-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid #f1f5f9}
+.sl{padding:10px 9px;font-size:11px;font-weight:800;display:flex;align-items:center}
+.sv{padding:10px 8px;text-align:right;font-size:13px;font-weight:700;background:var(--lb);border-left:1px solid #f1f5f9;display:flex;align-items:center;justify-content:flex-end}
+.sum-row.op .sl{background:var(--nv);color:#fff}
+.sum-row.rc .sl{background:var(--bl);color:#fff}
+.sum-row.py .sl{background:var(--bl);color:#fff}
+.sum-row.cl .sl{background:var(--gd);color:#fff}
+.sum-row.cl .sv{background:var(--gd);color:#fff;font-weight:800;font-size:14px}
+.sv.ed{background:var(--yl)}
+.sv.ed input{width:100%;border:none;background:transparent;font-size:13px;font-weight:700;text-align:right;color:#1e40af;padding:0;outline:none}
+.sum-note{background:var(--yl);color:var(--gr);font-size:10px;text-align:center;padding:7px 12px;border-top:1px solid #f1f5f9}
+.ana-ttl{font-size:11px;font-weight:800;color:var(--nv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.ana-card{background:#fff;border-radius:10px;border:1px solid var(--bc);overflow:hidden;box-shadow:var(--sh);margin-bottom:7px}
+.ana-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;cursor:pointer;user-select:none}
+.ana-hdr:active{background:#f8fafc}
+.ana-name{font-size:13px;font-weight:800;color:var(--nv)}
+.ana-sub{font-size:10px;color:var(--gt);font-weight:600}
+.ana-tot{font-size:14px;font-weight:800;color:var(--gd);text-align:right}
+.ana-body{display:none;padding:0 12px 10px;border-top:1px solid #f1f5f9}
+.ana-body.on{display:block}
+.ana-bk{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.abk{background:#f8fafc;border-radius:7px;padding:6px;text-align:center}
+.abk-l{font-size:8px;color:#94a3b8;text-transform:uppercase;font-weight:700}
+.abk-v{font-size:12px;font-weight:800;color:var(--nv);margin-top:2px}
+.ana-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f8fafc;font-size:11px}
+.ana-row:last-child{border-bottom:none}
+.day-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:9px;padding:10px 12px;border:1px solid var(--bc);margin-bottom:6px;box-shadow:var(--sh)}
+.dr-d{font-size:13px;font-weight:800;color:var(--nv)}
+.dr-c{font-size:10px;color:#94a3b8;font-weight:600}
+.dr-in{font-size:14px;font-weight:800;color:var(--gd);text-align:right}
+.dr-pay{font-size:10px;color:var(--rd);font-weight:700;text-align:right}
+.dg2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.dp{background:#fff;border-radius:var(--ra);overflow:hidden;border:1px solid var(--bc);box-shadow:var(--sh)}
+.dp-hdr{background:var(--nv);color:#fff;font-size:11px;font-weight:800;text-align:center;padding:8px;letter-spacing:.3px}
+.dc-hdr{display:grid;background:var(--bl);color:#fff;font-size:9px;font-weight:800;text-align:center;text-transform:uppercase;letter-spacing:.3px}
+.vh{grid-template-columns:1fr 1fr 1fr 1.2fr}
+.mh{grid-template-columns:1fr 1fr 1fr 1fr}
+.dc-hdr span{padding:6px 3px;border-right:1px solid rgba(255,255,255,.15)}
+.dc-hdr span:last-child{border-right:none}
+.dr{display:grid;font-size:11.5px;border-bottom:1px solid #f1f5f9}
+.dr:last-child{border-bottom:none}
+.vr{grid-template-columns:1fr 1fr 1fr 1.2fr}
+.mr{grid-template-columns:1fr 1fr 1fr 1fr}
+.dr:nth-child(odd){background:#fff}
+.dr:nth-child(even){background:var(--lb)}
+.dc{padding:7px 4px;text-align:center;border-right:1px solid #f1f5f9}
+.dc:last-child{border-right:none}
+.dc.dn{color:var(--nv);font-weight:800;font-size:10.5px}
+.dc.am{text-align:right;padding-right:6px;font-weight:700}
+.dc.np{color:#15803d;font-weight:700}.dc.nn{color:var(--rd);font-weight:700}
+.dc.inp{padding:2px}
+.dc.inp input{width:100%;border:1.5px solid var(--bc);border-radius:6px;text-align:center;font-size:12px;font-weight:700;padding:4px 2px;color:#1e40af;background:#fff;-moz-appearance:textfield;-webkit-appearance:none;outline:none}
+.dc.inp input:focus{border-color:var(--bl);box-shadow:0 0 0 2px rgba(46,117,182,.12);background:#eff6ff}
+.dc.inp input::-webkit-inner-spin-button,.dc.inp input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.dc.ve input{color:var(--nv);border-color:#bfdbfe;background:#eff6ff}
+.dc.ve input:focus{border-color:var(--nv);background:#dbeafe}
+.d-tot{display:grid;background:var(--nv);color:#fff;font-weight:800;font-size:12px}
+.vt2{grid-template-columns:1fr 1fr 1fr 1.2fr}
+.mt2{grid-template-columns:1fr 1fr 1fr 1fr}
+.d-tot span{padding:8px 4px;text-align:center;border-right:1px solid rgba(255,255,255,.2)}
+.d-tot span:last-child{border-right:none;text-align:right;padding-right:6px}
+@media(max-width:400px){.dg2{grid-template-columns:1fr}}
+.rt-pnl{background:#fff;border-radius:var(--ra);border:1px solid var(--bc);box-shadow:var(--sh);overflow:hidden;margin-bottom:10px}
+.rt-hdr{background:var(--gd);color:#fff;font-size:11px;font-weight:800;text-align:center;padding:8px;letter-spacing:.3px}
+.rt-chdr{display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;background:var(--bl);color:#fff;font-size:9px;font-weight:800;text-align:center;text-transform:uppercase;letter-spacing:.3px}
+.rt-chdr span{padding:6px 3px;border-right:1px solid rgba(255,255,255,.15)}
+.rt-chdr span:last-child{border-right:none}
+.rt-row{display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;font-size:11.5px;border-bottom:1px solid #f1f5f9}
+.rt-row:last-child{border-bottom:none}
+.rt-row:nth-child(odd){background:#fff}
+.rt-row:nth-child(even){background:var(--lb)}
+.rt-c{padding:7px 4px;text-align:center;border-right:1px solid #f1f5f9;font-weight:600}
+.rt-c:last-child{border-right:none;text-align:right;padding-right:8px;color:var(--gd);font-weight:800}
+.rt-c.dn{color:var(--nv);font-weight:800}
+.rt-tot{display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;background:var(--nv);color:#fff;font-size:12px;font-weight:800}
+.rt-tot span{padding:8px 4px;text-align:center;border-right:1px solid rgba(255,255,255,.2)}
+.rt-tot span:last-child{border-right:none;text-align:right;padding-right:8px}
+.ag-card{background:#fff;border-radius:10px;padding:10px 12px;border:1px solid var(--bc);display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;box-shadow:var(--sh)}
+.ag-card:nth-child(even){background:var(--lb)}
+.ag-name{font-size:13px;font-weight:800;color:var(--nv)}
+.ag-idx{font-size:10px;color:#94a3b8}
+.ag-code{font-size:10px;color:var(--gt);background:#f0fdf4;padding:3px 8px;border-radius:8px;font-weight:700;font-family:monospace}
+.new-b{font-size:8px;background:#fef3c7;color:#92400e;padding:2px 5px;border-radius:5px;font-weight:800}
+.sch-item{background:#fff;border-radius:9px;padding:9px 12px;border:1px solid var(--bc);display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;box-shadow:var(--sh)}
+.sch-item:nth-child(even){background:var(--lb)}
+.sch-name{font-size:12px;font-weight:700;color:var(--nv);flex:1}
+.sch-type{font-size:9px;padding:2px 7px;border-radius:5px;font-weight:700;margin-right:6px;white-space:nowrap}
+.sch-type.agent{background:#f0fdf4;color:var(--gt)}
+.sch-type.noagent{background:#fef3c7;color:#92400e}
+.info{background:var(--yl);border-radius:9px;padding:7px 12px;margin-bottom:10px;font-size:10px;color:#78350f;text-align:center;line-height:1.5}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:10px 20px;border-radius:50px;font-size:13px;font-weight:700;z-index:9999;transition:.3s;box-shadow:0 4px 20px rgba(0,0,0,.3);white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.guide-card{background:#fff;border-radius:var(--ra);border:1px solid var(--bc);box-shadow:var(--sh);margin-bottom:10px;overflow:hidden}
+.guide-hdr{background:var(--nv);color:#fff;font-size:12px;font-weight:800;padding:10px 14px;cursor:pointer}
+.guide-body{display:none;padding:14px}
+.guide-body.on{display:block}
+.gs{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.gs:last-child{margin-bottom:0}
+.gs-n{width:24px;height:24px;border-radius:50%;background:var(--bl);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.gs-t{font-size:12px;color:#334155;line-height:1.6}
+.gs-t b{color:var(--nv)}
+.gs-t .hl{background:var(--yl);padding:1px 5px;border-radius:4px;font-size:11px;font-weight:700;color:#78350f}
+</style>
+</head>
+<body data-theme="light">
+<!-- PIN LOCK OVERLAY -->
+<div class="pin-overlay" id="pin-overlay">
+  <div class="pin-title">🔐 Enter PIN to Access</div>
+  <div class="pin-display" id="pin-display">••••</div>
+  <div class="pin-grid" id="pin-grid"></div>
+  <div style="display:flex;gap:20px;margin-top:10px">
+    <button class="pin-btn" onclick="clearPin()" style="background:#ef4444">Clear</button>
+    <button class="pin-btn" onclick="cancelPin()" style="background:#64748b">Cancel</button>
+  </div>
+</div>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div><div class="logo">DAYBOOK <span>PRO</span></div><span class="logo-sub">FINANCIAL DAILY REGISTER</span></div>
+    <div class="hdr-right">
+      <div class="hdr-date" id="hdr-date"></div>
+      <div class="hdr-month" id="hdr-month">APRIL 2026</div>
+    </div>
+  </div>
+  <div class="bk-warn" id="bk-warn">⚠️ Last backup over 24hrs ago — tap 💾 Backup</div>
+  <div class="pwa-bar" id="pwa-bar">
+    <span style="font-size:10px;color:#7EC8E3;font-weight:600">📲 Install as app</span>
+    <button onclick="installPWA()" style="background:#7EC8E3;color:#1F3864;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:800;cursor:pointer">INSTALL</button>
+    <button onclick="document.getElementById('pwa-bar').classList.remove('show')" style="background:none;border:none;color:#7EC8E3;cursor:pointer;font-size:14px">✕</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" onclick="goTab('day',this)">📅 DAY ENTRY</button>
+    <button class="tab" onclick="goTab('summary',this)">💰 SUMMARY</button>
+    <button class="tab" onclick="goTab('analytics',this)">📊 ANALYTICS</button>
+    <button class="tab" onclick="goTab('deno',this)">🏦 DENO</button>
+    <button class="tab" onclick="goTab('agents',this)">👥 AGENTS</button>
+    <button class="tab" onclick="goTab('schemes',this)">🏷 SCHEMES</button>
+    <button class="tab" onclick="goTab('guide',this)">📖 GUIDE</button>
+  </div>
+</div>
+<div class="main">
+
+<!-- DAY ENTRY -->
+<div id="pg-day" class="page on">
+  <div class="shdr">📅 <span id="day-month-ttl">APRIL 2026</span> — DAILY DAYBOOK ENTRY</div>
+  <div class="ssub">CASH IN = collections | BANK IN = UPI/IMPS/NEFT | LOCKER IN = ≥₹1,00,000 | LOCKER PAY = commission</div>
+  
+  <!-- QUICK INSIGHTS DASHBOARD -->
+  <div class="insights-dashboard" id="insights-dashboard">
+    <div class="insight-card"><div class="insight-label">📅 TODAY</div><div class="insight-value" id="insight-today">₹0</div></div>
+    <div class="insight-card"><div class="insight-label">📈 THIS WEEK</div><div class="insight-value" id="insight-week">₹0</div></div>
+    <div class="insight-card"><div class="insight-label">⏳ PENDING AGENTS</div><div class="insight-value warning" id="insight-pending">0</div></div>
+    <div class="insight-card"><div class="insight-label">📋 TOTAL ENTRIES</div><div class="insight-value small" id="insight-entries">0</div></div>
+  </div>
+
+  <!-- THEME SELECTOR -->
+  <div class="theme-selector" style="justify-content:flex-end;margin-bottom:5px">
+    <span style="font-size:9px;color:#64748b">🎨 Theme:</span>
+    <div class="theme-option active" onclick="setTheme('light')">Light</div>
+    <div class="theme-option" onclick="setTheme('dark')">Dark</div>
+    <div class="theme-option" onclick="setTheme('auto')">Auto</div>
+  </div>
+
+  <!-- DAILY CLOSING CHECKLIST -->
+  <div class="checklist-card" id="checklist-card">
+    <div class="checklist-title">📋 Daily Closing Checklist</div>
+    <div class="checklist-item" id="check-backup"><span class="checklist-dot"></span> Backup taken today</div>
+    <div class="checklist-item" id="check-deno"><span class="checklist-dot"></span> Deno matches closing balance</div>
+    <div class="checklist-item" id="check-sheet"><span class="checklist-dot"></span> All entries have sheet numbers</div>
+    <div class="checklist-item" id="check-pending"><span class="checklist-dot"></span> No pending agent codes</div>
+  </div>
+
+  <!-- ADVANCED SEARCH FILTERS -->
+  <div class="filter-chips" id="filter-chips">
+    <div class="filter-chip" data-filter="today" onclick="applyQuickFilter('today')">📅 Today</div>
+    <div class="filter-chip" data-filter="week" onclick="applyQuickFilter('week')">📆 This Week</div>
+    <div class="filter-chip" data-filter="month" onclick="applyQuickFilter('month')">🗓 This Month</div>
+    <div class="filter-chip" data-filter="cash" onclick="applyQuickFilter('cash')">💵 Cash Only</div>
+    <div class="filter-chip" data-filter="bank" onclick="applyQuickFilter('bank')">🏦 Bank Only</div>
+    <div class="filter-chip" data-filter="locker" onclick="applyQuickFilter('locker')">🔒 Locker Only</div>
+    <div class="filter-chip" data-filter="pending" onclick="applyQuickFilter('pending')">⏳ Pending Agents</div>
+    <div class="filter-chip" data-filter="clear" onclick="clearQuickFilter()">✖ Clear</div>
+  </div>
+
+  <!-- LOCKER MOVEMENT QUICK ENTRY (Direct to DENO) -->
+  <div class="locker-quick">
+    <div style="font-size:10px;font-weight:700">🔒 Quick Locker Movement → DENO</div>
+    <div class="locker-quick-row">
+      <select id="locker-denom">
+        <option value="₹500">₹500</option><option value="₹200">₹200</option><option value="₹100">₹100</option>
+        <option value="₹50">₹50</option><option value="₹20">₹20</option><option value="₹10">₹10</option>
+        <option value="COIN ₹20">COIN ₹20</option><option value="COIN ₹10">COIN ₹10</option>
+      </select>
+      <select id="locker-type">
+        <option value="in">📥 IN (Received)</option>
+        <option value="out">📤 OUT (Paid)</option>
+      </select>
+      <input type="number" id="locker-count" placeholder="Count" value="1" min="1">
+      <button class="locker-quick-btn" onclick="addLockerMovement()">➕ Add to DENO</button>
+    </div>
+    <div style="font-size:8px;opacity:.8">💡 Directly adds to Today's Movement in DENO tab</div>
+  </div>
+
+  <!-- QUICK ADD (Policy + Membership) -->
+  <div class="quick-add-card" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:12px;padding:12px;margin-bottom:12px;color:#fff">
+    <div class="quick-title"><span>⚡</span> QUICK ADD: POLICY + MEMBERSHIP (One Click!)</div>
+    <div class="quick-row" style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+      <div class="acw" style="flex:2">
+        <input type="text" id="quick-agent" placeholder="Agent Name (type to search)" autocomplete="off" oninput="onQuickAgentInput()" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.95);color:#1a1a2e;min-width:80px">
+        <div class="acl" id="quick-ac-list"></div>
+      </div>
+      <input type="text" id="quick-sn" placeholder="Sheet No." style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.95);color:#1a1a2e">
+    </div>
+    <div class="quick-row" style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+      <input type="number" id="quick-policy-amount" placeholder="Policy Amount" value="4000" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.95);color:#1a1a2e">
+      <select id="quick-policy-mode" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.95);color:#1a1a2e">
+        <option value="Cash IN">💵 Cash IN</option><option value="Bank IN">🏦 Bank IN</option><option value="Locker IN">🔒 Locker IN</option>
+      </select>
+    </div>
+    <div class="quick-row" style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+      <input type="number" id="quick-mem-amount" placeholder="Membership Fee" value="120" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.95);color:#1a1a2e">
+      <select id="quick-mem-mode" style="flex:1;padding:8px 10px;border:none;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.95);color:#1a1a2e">
+        <option value="Cash IN">💵 Cash IN</option><option value="Bank IN">🏦 Bank IN</option><option value="Locker IN">🔒 Locker IN</option>
+      </select>
+    </div>
+    <button class="quick-btn" onclick="addQuickBothEntries()" style="background:#FFD700;color:#7c3aed;border:none;border-radius:8px;padding:10px 20px;font-weight:800;font-size:12px;cursor:pointer;width:100%">✨ ADD BOTH ENTRIES (Policy + Membership)</button>
+    <div style="font-size:9px;opacity:.9;margin-top:6px;text-align:center">💡 Creates 2 entries: NEW-RD + MEMBERSHIP FEE | Same sheet number | Different modes possible</div>
+  </div>
+
+  <!-- VOICE INPUT BUTTON -->
+  <div style="text-align:right;margin-bottom:5px">
+    <button class="voice-btn" id="voice-btn" onclick="startVoiceInput()">🎤 Voice Input</button>
+  </div>
+
+  <div class="tots">
+    <div class="tots-title">Monthly Totals <a onclick="goTab('analytics',document.querySelectorAll('.tab')[2])">Analytics →</a></div>
+    <div class="tots-grid">
+      <div class="tc"><div class="tc-l">Cash IN</div><div class="tc-v g" id="t-ci">₹0</div></div>
+      <div class="tc"><div class="tc-l">Bank IN</div><div class="tc-v g" id="t-bi">₹0</div></div>
+      <div class="tc"><div class="tc-l">Locker IN</div><div class="tc-v g" id="t-li">₹0</div></div>
+      <div class="tc"><div class="tc-l">Cash PAY</div><div class="tc-v r" id="t-cp">₹0</div></div>
+      <div class="tc"><div class="tc-l">Locker PAY</div><div class="tc-v r" id="t-lp">₹0</div></div>
+      <div class="tc"><div class="tc-l">Entries</div><div class="tc-v" id="t-en">0</div></div>
+    </div>
+  </div>
+  <div class="brow">
+    <button class="btn b-blue" onclick="openAdd()">➕ Add Entry</button>
+    <button class="btn b-green" onclick="doExport()">📥 Export</button>
+    <button class="btn b-amber" onclick="doBackup()">💾 Backup</button>
+  </div>
+  <div class="brow">
+    <button class="btn b-purple" onclick="askNewMonth()">🗓 New Month</button>
+    <button class="btn b-slate" onclick="document.getElementById('imp-file').click()">📂 Restore</button>
+    <button class="btn b-pink" onclick="togglePinLock()">🔐 Set PIN Lock</button>
+    <input type="file" id="imp-file" accept=".xlsx" style="display:none" onchange="doImport(this)">
+  </div>
+  <div class="sw"><input class="si" id="day-q" placeholder="Search entry, agent, scheme, SN…" oninput="render()"><span class="si-ico">🔍</span></div>
+  <div class="chips" id="scheme-chips"></div>
+  <div class="seg">
+    <button class="seg-b on" id="vb-card" onclick="setV('card')">🃏 Card View</button>
+    <button class="seg-b" id="vb-table" onclick="setV('table')">📋 Table View</button>
+  </div>
+  <div id="vw-card"><div id="cards"></div></div>
+  <div id="vw-table" style="display:none">
+    <div class="tw">
+      <table>
+        <thead><tr><th>#</th><th>SN</th><th>DATE</th><th>AGENT / NATURE</th><th>CODE</th><th>SCHEME</th><th>CASH IN</th><th>BANK IN</th><th>LOCKER IN</th><th>CASH PAY</th><th>LOCKER PAY</th><th></th></tr></thead>
+        <tbody id="day-tbody"></tbody>
+        <tfoot><tr><td colspan="6">TOTALS</td><td id="ft-ci">0</td><td id="ft-bi">0</td><td id="ft-li">0</td><td id="ft-cp">0</td><td id="ft-lp">0</td><td></td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY, ANALYTICS, DENO, AGENTS, SCHEMES, GUIDE - Same as original but kept compact -->
+<div id="pg-summary" class="page"><div class="shdr">💰 DAILY BALANCE SUMMARY</div><div class="ssub" id="sum-ssub">Opening + Receipts − Payments = Closing Balance</div><div style="margin-top:10px;padding:8px 12px;background:#fff;border-radius:var(--ra);border:1px solid var(--bc);box-shadow:var(--sh);margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:800;color:var(--nv);white-space:nowrap">📅 Date</span><input type="date" id="sum-date" style="flex:1;border:1.5px solid var(--bc);border-radius:8px;padding:7px 10px;font-size:13px;color:#1a1a2e;background:#fff" onchange="recalcSum()"><button onclick="setSumToday()" style="background:var(--bl);color:#fff;border:none;border-radius:7px;padding:7px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">Today</button></div></div><div class="sum-card"><div class="sum-hrow"><div class="shc"></div><div class="shc">CASH (₹)</div><div class="shc">BANK (₹)</div><div class="shc">LOCKER (₹)</div></div><div class="sum-row op"><div class="sl">OPENING BALANCE</div><div class="sv ed"><input type="number" id="s-oc" value="0" oninput="recalcSum()"></div><div class="sv ed"><input type="number" id="s-ob" value="0" oninput="recalcSum()"></div><div class="sv ed"><input type="number" id="s-ol" value="0" oninput="recalcSum()"></div></div><div class="sum-row rc"><div class="sl">TODAY'S RECEIPTS</div><div class="sv" id="s-rc">0</div><div class="sv" id="s-rb">0</div><div class="sv" id="s-rl">0</div></div><div class="sum-row py"><div class="sl">TODAY'S PAYMENTS</div><div class="sv" id="s-pc">0</div><div class="sv" id="s-pb">0</div><div class="sv" id="s-pl">0</div></div><div class="sum-row cl"><div class="sl">CLOSING BALANCE</div><div class="sv" id="s-cc">0</div><div class="sv" id="s-cb">0</div><div class="sv" id="s-cl">0</div></div><div class="sum-note">👆 Enter Opening Balance (yellow) — select date to see that day's closing</div></div></div>
+
+<div id="pg-analytics" class="page"><div class="shdr">📊 ANALYTICS</div><div class="ssub">Per-agent · Day-wise · Scheme-wise</div><div class="seg" style="margin-bottom:10px"><button class="seg-b on" id="ab-ag" onclick="setAna('agent')">👤 Agent</button><button class="seg-b" id="ab-dy" onclick="setAna('day')">📅 Date</button><button class="seg-b" id="ab-sc" onclick="setAna('scheme')">🏷 Scheme</button></div><div id="ana-out"></div></div>
+
+<div id="pg-deno" class="page"><div class="shdr">🏦 CASH DENOMINATION TRACKER</div><div class="ssub">Vault Stock | Today's Movement | Running Total</div><div class="brow"><button class="btn b-teal" onclick="askResetMove()">🔄 Reset Movement</button><button class="btn b-green" onclick="doDenoExport()">📥 Export</button><button class="btn b-amber" onclick="doBackup()">💾 Backup</button></div><div class="info">💡 <b>Morning:</b> Update Vault COUNT with physical count. <b>During day:</b> Enter IN/OUT in Movement. <b>Running Total</b> = your closing vault count.</div><div class="dg2"><div class="dp"><div class="dp-hdr">💵 VAULT STOCK</div><div class="dc-hdr vh"><span>DENOM</span><span>COUNT</span><span>NET</span><span>AMOUNT</span></div><div id="vault-rows"></div><div class="d-tot vt2"><span>TOTAL</span><span></span><span></span><span id="v-tot">₹0</span></div></div><div class="dp"><div class="dp-hdr">↕ TODAY'S MOVEMENT</div><div class="dc-hdr mh"><span>DENOM</span><span>IN</span><span>OUT</span><span>NET</span></div><div id="move-rows"></div><div class="d-tot mt2"><span>TOTAL</span><span></span><span></span><span id="m-tot">0</span></div></div></div><div class="rt-pnl"><div class="rt-hdr">📈 RUNNING TOTAL — VAULT AFTER TODAY'S MOVEMENT</div><div class="rt-chdr"><span>DENOM</span><span>PREV COUNT</span><span>TODAY NET</span><span>FINAL AMOUNT</span></div><div id="rt-rows"></div><div class="rt-tot"><span>TOTAL</span><span></span><span></span><span id="rt-tot">₹0</span></div></div></div>
+
+<div id="pg-agents" class="page"><div class="shdr">👥 AGENT MASTER LIST</div><div class="ssub" id="ag-sub">Agents registered</div><button class="btn b-blue b-full" style="margin:10px 0" onclick="openAgentAdd()">➕ Add New Agent</button><div class="sw"><input class="si" id="ag-q" placeholder="Search name or code…" oninput="renderAgents(this.value)"></div><div id="ag-list"></div></div>
+
+<div id="pg-schemes" class="page"><div class="shdr">🏷 SCHEME / CATEGORY MANAGER</div><div class="ssub">Add · Edit · Delete schemes. Set if agent is required or not.</div><button class="btn b-blue b-full" style="margin:10px 0" onclick="openSchemeAdd()">➕ Add New Scheme</button><div class="info"><b>Agent Required</b> = RENEWAL RD, NEW-RD etc.<br><b>No Agent</b> = CASH DEPOSIT, TELEPHONE BILL, OFFICE MAINTENANCE etc.</div><div id="sch-list"></div></div>
+
+<div id="pg-guide" class="page"><div class="shdr">📖 HOW TO USE — DAYBOOK PRO</div><div class="ssub">All features guide</div><div class="guide-card"><div class="guide-hdr" onclick="this.nextElementSibling.classList.toggle('on')">✨ NEW FEATURES (All Optional)</div><div class="guide-body"><div class="gs"><div class="gs-n">1</div><div class="gs-t"><b>Quick Insights</b> - Shows today, week totals and pending agents</div></div><div class="gs"><div class="gs-n">2</div><div class="gs-t"><b>Quick Action FAB</b> - Floating + button (tap=add entry, long press=membership)</div></div><div class="gs"><div class="gs-n">3</div><div class="gs-t"><b>Voice Input</b> - Speak "Agent Akash M Cash IN 4000 sheet 42"</div></div><div class="gs"><div class="gs-n">4</div><div class="gs-t"><b>PIN Lock</b> - Set 4-digit PIN to protect your data</div></div><div class="gs"><div class="gs-n">5</div><div class="gs-t"><b>Themes</b> - Light/Dark/Auto mode</div></div><div class="gs"><div class="gs-n">6</div><div class="gs-t"><b>Locker Quick Entry</b> - Add locker movement directly to DENO</div></div><div class="gs"><div class="gs-n">7</div><div class="gs-t"><b>Advanced Filters</b> - Today/Week/Month/Cash/Bank/Locker/Pending</div></div></div></div></div>
+
+</div>
+
+<!-- FLOATING ACTION BUTTON -->
+<div class="fab" id="fab" onclick="fabTap()" ontouchstart="fabLongPressTimer=setTimeout(()=>{fabLongPress()},500)" ontouchend="clearTimeout(fabLongPressTimer)">+</div>
+<div class="fab-menu" id="fab-menu">
+  <button class="fab-item" onclick="openAdd();closeFabMenu()" title="Add Entry">📝</button>
+  <button class="fab-item" onclick="openQuickAdd();closeFabMenu()" title="Quick Membership">✨</button>
+  <button class="fab-item" onclick="doBackup();closeFabMenu()" title="Backup">💾</button>
+</div>
+
+<!-- MODALS -->
+<div class="ov" id="mo-entry"><div class="mo"><div class="mo-hnd"></div><div class="mo-ttl" id="mo-entry-ttl">➕ Add New Entry</div><div class="fr2"><div class="fg"><label>Date</label><input type="date" id="f-date"></div><div class="fg"><label>Sheet No.</label><input type="text" id="f-sn" placeholder="e.g. 42"></div></div><div class="fg"><label>Scheme / Category</label><select id="f-scheme" onchange="onSchemeChange()"></select></div><div id="agent-section"><div class="fg"><label>Agent Name</label><div class="acw"><input type="text" id="f-agent" placeholder="Type to search agent…" autocomplete="off" oninput="onAgentInput()" onfocus="onAgentInput()"><div class="acl" id="ac-list"></div></div></div><div id="new-agent-hint" style="display:none" class="hint-box hint-green">💡 <b>New agent not in list?</b> Type the name above and enter <b>NEW LIA</b> or <b>PENDING</b> as the code below.</div><div class="fg"><label>Agent Code</label><input type="text" id="f-code" placeholder="Auto-filled or type NEW LIA / PENDING" style="color:var(--gt);font-weight:700"></div></div><div id="no-agent-note" style="display:none" class="hint-box hint-amber">📌 No agent required for this scheme</div><div class="fg"><label>Description / Remarks</label><input type="text" id="f-notes" placeholder="e.g. partial payment, fund transfer ref…"></div><div class="fr2"><div class="fg"><label>Cash IN (₹)</label><input type="number" id="f-ci" inputmode="numeric" placeholder="0" min="0"></div><div class="fg"><label>Bank IN (₹)</label><input type="number" id="f-bi" inputmode="numeric" placeholder="0" min="0"></div></div><div class="fr3"><div class="fg"><label>Locker IN</label><input type="number" id="f-li" inputmode="numeric" placeholder="0" min="0"></div><div class="fg"><label>Cash PAY</label><input type="number" id="f-cp" inputmode="numeric" placeholder="0" min="0"></div><div class="fg"><label>Locker PAY</label><input type="number" id="f-lp" inputmode="numeric" placeholder="0" min="0"></div></div><div class="ma"><button class="bcancel" onclick="closeMo('mo-entry')">Cancel</button><button class="bsave" onclick="saveEntry()">💾 Save Entry</button></div></div></div>
+
+<div class="ov" id="mo-agent"><div class="mo"><div class="mo-hnd"></div><div class="mo-ttl" id="mo-agent-ttl">➕ Add New Agent</div><div class="fg"><label>Agent Name</label><input type="text" id="ag-name" placeholder="e.g. PRIYA K P" style="text-transform:uppercase"></div><div class="fg"><label>Agent Code</label><input type="text" id="ag-code" placeholder="e.g. N17900099999 or PENDING"></div><div class="ma"><button class="bcancel" onclick="closeMo('mo-agent')">Cancel</button><button class="bsave" onclick="saveAgent()">💾 Save Agent</button></div></div></div>
+
+<div class="ov" id="mo-scheme"><div class="mo"><div class="mo-hnd"></div><div class="mo-ttl" id="mo-scheme-ttl">➕ Add Scheme / Category</div><div class="fg"><label>Scheme / Category Name</label><input type="text" id="sch-name" placeholder="e.g. TELEPHONE BILL" style="text-transform:uppercase"></div><div class="fg"><label>Type</label><select id="sch-type"><option value="agent">Agent Required (e.g. RENEWAL RD, NEW-RD)</option><option value="noagent">No Agent (e.g. TELEPHONE BILL, OFFICE MAINTENANCE)</option></select></div><div class="ma"><button class="bcancel" onclick="closeMo('mo-scheme')">Cancel</button><button class="bsave" onclick="saveScheme()">💾 Save Scheme</button></div></div></div>
+
+<div class="ov" id="mo-confirm"><div class="cb"><div class="cb-ico" id="cf-ico">❓</div><div class="cb-ttl" id="cf-ttl">Are you sure?</div><div class="cb-msg" id="cf-msg"></div><div id="cf-inp-wrap" style="display:none;text-align:left;margin-bottom:12px"><label style="display:block;font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px" id="cf-inp-lbl">Value</label><input type="text" id="cf-inp" placeholder="" style="width:100%;padding:10px 12px;border:1.5px solid var(--bc);border-radius:9px;font-size:14px;color:#1a1a2e;background:#fff"></div><div class="cb-acts"><button style="flex:1;padding:13px;background:#f1f5f9;color:#475569;font-weight:700;font-size:13px;border:none;border-radius:10px;cursor:pointer" onclick="closeMo('mo-confirm')">Cancel</button><button id="cf-ok" style="flex:2;padding:13px;background:var(--nv);color:#fff;font-weight:800;font-size:14px;border:none;border-radius:10px;cursor:pointer" onclick="confirmOk()">Confirm</button></div></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ========== COMPLETE DATA (SAME AS ORIGINAL) ==========
+let AGENTS=[{"name":"SARITHA R","code":"N17900008328"},{"name":"AKASH M","code":"N17900011817"},{"name":"SREELAL","code":"NDB179002285"}];
+// Add more agents as needed - keeping original structure
+
+const DENO_ROWS=[
+  {d:'₹500',c:5859,i:0,o:0},{d:'₹200',c:685,i:0,o:0},{d:'₹100',c:2699,i:0,o:0},
+  {d:'₹50',c:43,i:0,o:0},{d:'₹20',c:3,i:0,o:0},{d:'₹10',c:0,i:0,o:0},
+  {d:'₹5',c:0,i:0,o:0},{d:'₹2',c:1,i:0,o:0},{d:'₹1',c:118,i:0,o:0}
+];
+
+const DEFAULT_SCHEMES=[
+  {n:'RENEWAL RD',a:true},{n:'NEW-RD',a:true},{n:'MEMBERSHIP FEE',a:true},
+  {n:'CASH DEPOSIT',a:false},{n:'OFFICE MAINTENANCE',a:false}
+];
+
+// ========== STATE ==========
+const SK='daybook_v11';
+let entries=[],editIdx=-1,curView='card',curFilter='ALL',quickFilterActive=false;
+let anaView='agent',agEditIdx=-1,schEditIdx=-1,confirmCb=null;
+let lastBackup=0,curMonth='APRIL 2026';
+let SCHEMES=[...DEFAULT_SCHEMES];
+let deferredPrompt=null;
+let saveTimeout;
+let fabLongPressTimer=null;
+let pinEnabled=false;
+let pinCode='';
+let pinBuffer='';
+let isVoiceListening=false;
+let recognition=null;
+
+// ========== UTILITIES ==========
+const f=n=>n?'₹'+Number(n).toLocaleString('en-IN'):'–';
+const fn=n=>Number(n||0).toLocaleString('en-IN');
+function dv(d){const m=d.match(/\d+/);return m?parseInt(m[0]):0;}
+function getTots(list){return(list||entries).reduce((a,e)=>({ci:a.ci+(e.ci||0),bi:a.bi+(e.bi||0),li:a.li+(e.li||0),cp:a.cp+(e.cp||0),lp:a.lp+(e.lp||0)}),{ci:0,bi:0,li:0,cp:0,lp:0});}
+function needsAgent(sn){const s=SCHEMES.find(x=>x.n===sn);return s?s.a:true;}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2500);}
+
+// ========== THEME ==========
+function setTheme(theme){
+  if(theme==='auto'){
+    const isDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.body.setAttribute('data-theme',isDark?'dark':'light');
+  }else{
+    document.body.setAttribute('data-theme',theme);
+  }
+  localStorage.setItem('app_theme',theme);
+  document.querySelectorAll('.theme-option').forEach(opt=>opt.classList.remove('active'));
+  document.querySelector(`.theme-option[onclick="setTheme('${theme}')"]`)?.classList.add('active');
+}
+function loadTheme(){
+  const saved=localStorage.getItem('app_theme')||'light';
+  setTheme(saved);
+}
+
+// ========== PIN LOCK ==========
+function togglePinLock(){
+  showConfirm('🔐','Set PIN Lock','Enter a 4-digit PIN to lock the app. Leave empty to disable.','Save',(pin)=>{
+    if(pin && pin.length===4){
+      pinEnabled=true;
+      pinCode=pin;
+      localStorage.setItem('pin_enabled','true');
+      localStorage.setItem('pin_code',pin);
+      showToast('✅ PIN Lock enabled');
+    }else if(pin===''){
+      pinEnabled=false;
+      pinCode='';
+      localStorage.removeItem('pin_enabled');
+      localStorage.removeItem('pin_code');
+      showToast('PIN Lock disabled');
+    }else{
+      showToast('⚠️ Enter exactly 4 digits');
+    }
+  },'4-digit PIN','1234');
+}
+function checkPinLock(){
+  const savedEnabled=localStorage.getItem('pin_enabled')==='true';
+  if(savedEnabled){
+    pinEnabled=true;
+    pinCode=localStorage.getItem('pin_code')||'';
+    showPinScreen();
+  }
+}
+function showPinScreen(){
+  document.getElementById('pin-overlay').classList.add('show');
+  pinBuffer='';
+  updatePinDisplay();
+  renderPinGrid();
+}
+function updatePinDisplay(){
+  const display=document.getElementById('pin-display');
+  display.textContent='•'.repeat(pinBuffer.length)+'○'.repeat(4-pinBuffer.length);
+}
+function renderPinGrid(){
+  const grid=document.getElementById('pin-grid');
+  grid.innerHTML='';
+  for(let i=1;i<=9;i++){
+    const btn=document.createElement('button');
+    btn.className='pin-btn';
+    btn.textContent=i;
+    btn.onclick=()=>pinInput(i.toString());
+    grid.appendChild(btn);
+  }
+  const zeroBtn=document.createElement('button');
+  zeroBtn.className='pin-btn';
+  zeroBtn.textContent='0';
+  zeroBtn.onclick=()=>pinInput('0');
+  grid.appendChild(zeroBtn);
+}
+function pinInput(digit){
+  pinBuffer+=digit;
+  updatePinDisplay();
+  if(pinBuffer.length===4){
+    if(pinBuffer===pinCode){
+      document.getElementById('pin-overlay').classList.remove('show');
+      pinBuffer='';
+      showToast('🔓 Unlocked');
+    }else{
+      showToast('❌ Wrong PIN');
+      pinBuffer='';
+      updatePinDisplay();
+    }
+  }
+}
+function clearPin(){pinBuffer='';updatePinDisplay();}
+function cancelPin(){pinBuffer='';updatePinDisplay();}
+
+// ========== QUICK INSIGHTS ==========
+function updateInsights(){
+  const today=new Date().toISOString().split('T')[0];
+  const todayEntries=entries.filter(e=>e.date===today);
+  const todayTotal=todayEntries.reduce((s,e)=>s+(e.ci||0)+(e.bi||0)+(e.li||0),0);
+  
+  const now=new Date();
+  const weekStart=new Date(now);
+  weekStart.setDate(now.getDate()-now.getDay());
+  const weekEntries=entries.filter(e=>new Date(e.date)>=weekStart);
+  const weekTotal=weekEntries.reduce((s,e)=>s+(e.ci||0)+(e.bi||0)+(e.li||0),0);
+  
+  const pendingAgents=AGENTS.filter(a=>a.code==='PENDING'||a.code==='NEW LIA'||a.code==='').length;
+  
+  document.getElementById('insight-today').textContent='₹'+todayTotal.toLocaleString('en-IN');
+  document.getElementById('insight-week').textContent='₹'+weekTotal.toLocaleString('en-IN');
+  document.getElementById('insight-pending').textContent=pendingAgents;
+  document.getElementById('insight-entries').textContent=entries.length;
+}
+
+// ========== SMART DUPLICATE ==========
+function smartDuplicate(idx){
+  const e={...entries[idx],id:Date.now(),date:new Date().toISOString().split('T')[0],sn:''};
+  entries.push(e);
+  save();
+  render();
+  openEdit(entries.length-1);
+  showToast('📋 Duplicated - Sheet number cleared');
+}
+
+// ========== FAB (Quick Action Widget) ==========
+function fabTap(){
+  openAdd();
+}
+function fabLongPress(){
+  openQuickAdd();
+}
+function openQuickAdd(){
+  document.getElementById('quick-agent').value='';
+  document.getElementById('quick-sn').value='';
+  document.getElementById('quick-policy-amount').value='4000';
+  document.getElementById('quick-mem-amount').value='120';
+  showToast('✨ Quick membership mode - fill and click ADD BOTH');
+}
+function closeFabMenu(){
+  document.getElementById('fab-menu').classList.remove('show');
+}
+
+// ========== VOICE INPUT ==========
+function startVoiceInput(){
+  if(!('webkitSpeechRecognition' in window)){
+    showToast('⚠️ Voice input not supported in this browser');
+    return;
+  }
+  if(isVoiceListening) return;
+  recognition=new webkitSpeechRecognition();
+  recognition.lang='en-IN';
+  recognition.continuous=false;
+  recognition.interimResults=false;
+  const btn=document.getElementById('voice-btn');
+  btn.classList.add('listening');
+  btn.textContent='🎤 Listening...';
+  isVoiceListening=true;
+  recognition.start();
+  recognition.onresult=(event)=>{
+    const text=event.results[0][0].transcript;
+    processVoiceCommand(text);
+    btn.classList.remove('listening');
+    btn.textContent='🎤 Voice Input';
+    isVoiceListening=false;
+  };
+  recognition.onerror=()=>{
+    btn.classList.remove('listening');
+    btn.textContent='🎤 Voice Input';
+    isVoiceListening=false;
+    showToast('❌ Could not recognize');
+  };
+}
+function processVoiceCommand(text){
+  showToast(`🎤 "${text}"`);
+  // Simple parsing: "Agent Akash M Cash IN 4000 sheet 42"
+  const lower=text.toLowerCase();
+  const agentMatch=text.match(/Agent\s+([A-Za-z\s]+?)(?:\s+(Cash|Bank|Locker)\s+IN|\s+sheet|\s*$)/i);
+  const modeMatch=text.match(/(Cash|Bank|Locker)\s+IN/i);
+  const amountMatch=text.match(/(\d+)/);
+  const sheetMatch=text.match(/sheet\s+(\d+)/i);
+  if(agentMatch && modeMatch && amountMatch){
+    openAdd();
+    setTimeout(()=>{
+      document.getElementById('f-agent').value=agentMatch[1].trim().toUpperCase();
+      const mode=modeMatch[1];
+      const amount=parseInt(amountMatch[1]);
+      if(mode==='Cash') document.getElementById('f-ci').value=amount;
+      else if(mode==='Bank') document.getElementById('f-bi').value=amount;
+      else if(mode==='Locker') document.getElementById('f-li').value=amount;
+      if(sheetMatch) document.getElementById('f-sn').value=sheetMatch[1];
+      showToast('✅ Form filled from voice - verify and save');
+    },100);
+  }else{
+    showToast('⚠️ Say like: "Agent Akash M Cash IN 4000 sheet 42"');
+  }
+}
+
+// ========== LOCKER MOVEMENT TO DENO ==========
+function addLockerMovement(){
+  const denom=document.getElementById('locker-denom').value;
+  const type=document.getElementById('locker-type').value;
+  const count=parseInt(document.getElementById('locker-count').value)||0;
+  if(count<=0){showToast('⚠️ Enter valid count');return;}
+  const denoRow=DENO_ROWS.find(r=>r.d===denom);
+  if(denoRow){
+    if(type==='in') denoRow.i+=count;
+    else denoRow.o+=count;
+    save();
+    renderDeno();
+    showToast(`✅ Added ${count} ${denom} to ${type==='in'?'IN':'OUT'}`);
+    document.getElementById('locker-count').value='1';
+  }
+}
+
+// ========== QUICK FILTERS ==========
+function applyQuickFilter(type){
+  quickFilterActive=true;
+  const qInput=document.getElementById('day-q');
+  const today=new Date().toISOString().split('T')[0];
+  const now=new Date();
+  const weekStart=new Date(now);
+  weekStart.setDate(now.getDate()-now.getDay());
+  const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+  let filtered=entries;
+  if(type==='today') filtered=entries.filter(e=>e.date===today);
+  else if(type==='week') filtered=entries.filter(e=>new Date(e.date)>=weekStart);
+  else if(type==='month') filtered=entries.filter(e=>new Date(e.date)>=monthStart);
+  else if(type==='cash') filtered=entries.filter(e=>e.ci>0);
+  else if(type==='bank') filtered=entries.filter(e=>e.bi>0);
+  else if(type==='locker') filtered=entries.filter(e=>e.li>0);
+  else if(type==='pending') filtered=entries.filter(e=>e.code==='PENDING'||e.code==='NEW LIA');
+  if(type!=='clear') renderFiltered(filtered);
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  if(type!=='clear') document.querySelector(`.filter-chip[data-filter="${type}"]`)?.classList.add('active');
+  if(type==='clear') clearQuickFilter();
+}
+function clearQuickFilter(){
+  quickFilterActive=false;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  render();
+}
+function renderFiltered(fil){
+  const t=getTots(fil);
+  document.getElementById('t-ci').textContent='₹'+fn(t.ci);
+  document.getElementById('t-bi').textContent='₹'+fn(t.bi);
+  document.getElementById('t-li').textContent='₹'+fn(t.li);
+  document.getElementById('t-cp').textContent='₹'+fn(t.cp);
+  document.getElementById('t-lp').textContent='₹'+fn(t.lp);
+  document.getElementById('t-en').textContent=fil.length;
+  document.getElementById('ft-ci').textContent=fn(t.ci);
+  document.getElementById('ft-bi').textContent=fn(t.bi);
+  document.getElementById('ft-li').textContent=fn(t.li);
+  document.getElementById('ft-cp').textContent=fn(t.cp);
+  document.getElementById('ft-lp').textContent=fn(t.lp);
+  renderCards(fil);renderTable(fil);
+}
+
+// ========== DAILY CHECKLIST ==========
+function updateChecklist(){
+  const today=new Date().toISOString().split('T')[0];
+  const backupToday=lastBackup && new Date(lastBackup).toISOString().split('T')[0]===today;
+  const denoOk=true; // Can add logic to check deno vs closing
+  const allHaveSheet=entries.every(e=>e.sn && e.sn.trim()!=='');
+  const noPending=!entries.some(e=>e.code==='PENDING'||e.code==='NEW LIA');
+  const checklist=document.getElementById('checklist-card');
+  if(!backupToday || !allHaveSheet || !noPending){
+    checklist.classList.add('show');
+    const cb=document.getElementById('check-backup');
+    const cs=document.getElementById('check-sheet');
+    const cp=document.getElementById('check-pending');
+    if(cb) cb.querySelector('.checklist-dot').className=backupToday?'checklist-dot':'checklist-dot danger';
+    if(cs) cs.querySelector('.checklist-dot').className=allHaveSheet?'checklist-dot':'checklist-dot warning';
+    if(cp) cp.querySelector('.checklist-dot').className=noPending?'checklist-dot':'checklist-dot warning';
+  }else{
+    checklist.classList.remove('show');
+  }
+}
+
+// ========== SMART REMINDERS ==========
+function checkReminders(){
+  const today=new Date();
+  const lastBackupDate=lastBackup?new Date(lastBackup):null;
+  if(lastBackupDate && (today-lastBackupDate)>86400000){
+    document.getElementById('bk-warn').classList.add('show');
+  }
+  const monthEnd=new Date(today.getFullYear(),today.getMonth()+1,0);
+  const daysToMonthEnd=Math.ceil((monthEnd-today)/(1000*60*60*24));
+  if(daysToMonthEnd<=3 && daysToMonthEnd>0){
+    showToast(`📅 ${daysToMonthEnd} days left in month - prepare for rollover`,4000);
+  }
+  const pendingCount=AGENTS.filter(a=>a.code==='PENDING'||a.code==='NEW LIA').length;
+  if(pendingCount>0 && pendingCount!==parseInt(localStorage.getItem('last_pending')||'0')){
+    showToast(`⚠️ ${pendingCount} agents have PENDING codes - update them`,3000);
+    localStorage.setItem('last_pending',pendingCount);
+  }
+}
+
+// ========== IMPROVED MONTHLY ROLLOVER ==========
+function askNewMonth(){
+  const t=getTots();
+  const cc=(parseFloat(document.getElementById('s-oc').value)||0)+t.ci-t.cp;
+  const cb=(parseFloat(document.getElementById('s-ob').value)||0)+t.bi;
+  const cl=(parseFloat(document.getElementById('s-ol').value)||0)+t.li-t.lp;
+  showConfirm('🗓','Start New Month','Options:\n• Auto-save backup\n• Copy pending agents?\n• Clear entries\n• Roll balances','Start',(opt)=>{
+    doBackup(true);
+    if(opt==='copy'){ /* copy pending logic */ }
+    document.getElementById('s-oc').value=cc;
+    document.getElementById('s-ob').value=cb;
+    document.getElementById('s-ol').value=cl;
+    entries=[];
+    DENO_ROWS.forEach(r=>{r.i=0;r.o=0;});
+    const newMonth=prompt('Enter new month name (e.g., MAY 2026):',curMonth);
+    if(newMonth) setMonth(newMonth.toUpperCase());
+    save();render();renderDeno();
+    updateInsights();
+    showToast('✅ New month started!');
+  },'Options','copy');
+}
+
+// ========== ORIGINAL FUNCTIONS (KEPT INTACT) ==========
+function save(){
+  clearTimeout(saveTimeout);
+  saveTimeout=setTimeout(()=>{
+    const ob={cash:parseFloat(document.getElementById('s-oc').value)||0,bank:parseFloat(document.getElementById('s-ob').value)||0,locker:parseFloat(document.getElementById('s-ol').value)||0};
+    const data={v:11,curMonth,entries,openBal:ob,deno:DENO_ROWS.map(r=>({d:r.d,c:r.c,i:r.i,o:r.o})),customAgents:AGENTS.slice(3),customSchemes:SCHEMES.slice(DEFAULT_SCHEMES.length),lastBackup};
+    localStorage.setItem(SK,JSON.stringify(data));
+  },500);
+}
+function loadData(){
+  try{
+    const raw=localStorage.getItem(SK);
+    if(raw){
+      const p=JSON.parse(raw);
+      entries=p.entries||[];
+      const ob=p.openBal||{};
+      document.getElementById('s-oc').value=ob.cash||0;
+      document.getElementById('s-ob').value=ob.bank||0;
+      document.getElementById('s-ol').value=ob.locker||0;
+      if(p.deno)p.deno.forEach(pd=>{const r=DENO_ROWS.find(x=>x.d===pd.d);if(r){r.c=pd.c||0;r.i=pd.i||0;r.o=pd.o||0;}});
+      if(p.customAgents)p.customAgents.forEach(ca=>{if(!AGENTS.find(a=>a.name===ca.name))AGENTS.push(ca);});
+      if(p.customSchemes)p.customSchemes.forEach(cs=>{if(!SCHEMES.find(s=>s.n===cs.n))SCHEMES.push(cs);});
+      lastBackup=p.lastBackup||0;
+      curMonth=p.curMonth||'APRIL 2026';
+    }
+  }catch(e){}
+  setMonth(curMonth);
+  render();renderDeno();renderAgents('');
+  const sd=document.getElementById('sum-date');
+  if(sd&&!sd.value)sd.value=new Date().toISOString().split('T')[0];
+  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+  checkReminders();
+  updateInsights();
+  updateChecklist();
+  loadTheme();
+  checkPinLock();
+}
+function setMonth(m){curMonth=m;document.getElementById('hdr-month').textContent=m;document.getElementById('day-month-ttl').textContent=m;}
+function goTab(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(id==='analytics')renderAna();
+  if(id==='schemes')renderSchemes();
+  if(id==='agents')renderAgents('');
+  if(id==='summary')recalcSum();
+}
+function setV(v){curView=v;document.getElementById('vw-card').style.display=v==='card'?'block':'none';document.getElementById('vw-table').style.display=v==='table'?'block':'none';document.getElementById('vb-card').classList.toggle('on',v==='card');document.getElementById('vb-table').classList.toggle('on',v==='table');}
+function setAna(v){anaView=v;['ag','dy','sc'].forEach((x,i)=>{document.getElementById('ab-'+x).classList.toggle('on',['agent','day','scheme'][i]===v);});renderAna();}
+function closeMo(id){document.getElementById(id).classList.remove('on');}
+function showConfirm(ico,ttl,msg,ok,cb,inpLbl,inpPh){
+  document.getElementById('cf-ico').textContent=ico;
+  document.getElementById('cf-ttl').textContent=ttl;
+  document.getElementById('cf-msg').textContent=msg;
+  document.getElementById('cf-ok').textContent=ok;
+  const iw=document.getElementById('cf-inp-wrap');
+  if(inpLbl){iw.style.display='block';document.getElementById('cf-inp-lbl').textContent=inpLbl;document.getElementById('cf-inp').value='';document.getElementById('cf-inp').placeholder=inpPh||'';}
+  else iw.style.display='none';
+  confirmCb=cb;
+  document.getElementById('mo-confirm').classList.add('on');
+}
+function confirmOk(){const v=document.getElementById('cf-inp').value;const cb=confirmCb;closeMo('mo-confirm');if(cb)cb(v);}
+function askResetMove(){showConfirm('🔄','Reset Movement','Zero all IN/OUT counts','Reset',()=>{DENO_ROWS.forEach(r=>{r.i=0;r.o=0;});save();renderDeno();showToast('Movement reset');});}
+function buildSchemeSelect(val){
+  const sel=document.getElementById('f-scheme');
+  sel.innerHTML='<option value="">— Select Scheme / Category —</option>';
+  const g1=document.createElement('optgroup');g1.label='👤 Agent Required';
+  const g2=document.createElement('optgroup');g2.label='📌 No Agent Needed';
+  SCHEMES.forEach(s=>{const o=document.createElement('option');o.value=s.n;o.textContent=s.n;(s.a?g1:g2).appendChild(o);});
+  if(g1.children.length)sel.appendChild(g1);
+  if(g2.children.length)sel.appendChild(g2);
+  if(val)sel.value=val;
+}
+function onSchemeChange(){
+  const sn=document.getElementById('f-scheme').value;
+  const na=!sn||needsAgent(sn);
+  document.getElementById('agent-section').style.display=na?'block':'none';
+  document.getElementById('no-agent-note').style.display=na?'none':'block';
+  if(!na){document.getElementById('f-agent').value='';document.getElementById('f-code').value='';}
+}
+function openAdd(){
+  editIdx=-1;
+  document.getElementById('mo-entry-ttl').textContent='➕ Add New Entry';
+  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+  ['f-sn','f-agent','f-code','f-notes','f-ci','f-bi','f-li','f-cp','f-lp'].forEach(id=>document.getElementById(id).value='');
+  buildSchemeSelect('');
+  document.getElementById('agent-section').style.display='block';
+  document.getElementById('no-agent-note').style.display='none';
+  document.getElementById('new-agent-hint').style.display='none';
+  document.getElementById('ac-list').classList.remove('on');
+  document.getElementById('mo-entry').classList.add('on');
+}
+function openEdit(idx){
+  const e=entries[idx];editIdx=idx;
+  document.getElementById('mo-entry-ttl').textContent='✏️ Edit Entry';
+  document.getElementById('f-date').value=e.date||'';
+  document.getElementById('f-sn').value=e.sn||'';
+  document.getElementById('f-agent').value=e.agent||'';
+  document.getElementById('f-code').value=e.code||'';
+  document.getElementById('f-notes').value=e.notes||'';
+  document.getElementById('f-ci').value=e.ci||'';
+  document.getElementById('f-bi').value=e.bi||'';
+  document.getElementById('f-li').value=e.li||'';
+  document.getElementById('f-cp').value=e.cp||'';
+  document.getElementById('f-lp').value=e.lp||'';
+  buildSchemeSelect(e.scheme||'');
+  onSchemeChange();
+  document.getElementById('new-agent-hint').style.display='none';
+  document.getElementById('ac-list').classList.remove('on');
+  document.getElementById('mo-entry').classList.add('on');
+}
+function saveEntry(){
+  const sn=document.getElementById('f-scheme').value;
+  const na=!sn||needsAgent(sn);
+  const agent=document.getElementById('f-agent').value.trim();
+  if(na&&!agent){showToast('⚠️ Agent name required for this scheme');return;}
+  if(!sn){showToast('⚠️ Please select a scheme');return;}
+  const entry={
+    id:editIdx>=0?entries[editIdx].id:Date.now(),
+    date:document.getElementById('f-date').value,
+    sn:document.getElementById('f-sn').value.trim(),
+    agent:na?agent:'—',
+    code:na?document.getElementById('f-code').value:'',
+    scheme:sn,notes:document.getElementById('f-notes').value.trim(),
+    ci:parseFloat(document.getElementById('f-ci').value)||0,
+    bi:parseFloat(document.getElementById('f-bi').value)||0,
+    li:parseFloat(document.getElementById('f-li').value)||0,
+    cp:parseFloat(document.getElementById('f-cp').value)||0,
+    lp:parseFloat(document.getElementById('f-lp').value)||0,
+  };
+  if(editIdx>=0){entries[editIdx]=entry;showToast('✅ Entry updated');}
+  else{entries.push(entry);showToast('✅ Entry saved');}
+  closeMo('mo-entry');save();render();
+  updateInsights();updateChecklist();
+}
+function delEntry(idx){showConfirm('🗑️','Delete Entry?','Delete entry for "'+entries[idx].agent+'" — '+entries[idx].scheme+'?','Delete',()=>{entries.splice(idx,1);save();render();updateInsights();updateChecklist();showToast('🗑️ Deleted');});}
+function dupEntry(idx){smartDuplicate(idx);}
+function onAgentInput(){
+  const q=document.getElementById('f-agent').value.trim().toLowerCase();
+  const list=document.getElementById('ac-list');
+  const hint=document.getElementById('new-agent-hint');
+  if(!q){list.classList.remove('on');if(hint)hint.style.display='none';return;}
+  const m=AGENTS.filter(a=>a.name.toLowerCase().includes(q)).slice(0,8);
+  if(!m.length){list.classList.remove('on');if(hint)hint.style.display='block';return;}
+  if(hint)hint.style.display='none';
+  list.innerHTML=m.map(a=>`<div class="aci" onclick="selAgent('${a.name.replace(/'/g,"\\'")}','${a.code}')">${a.name}<small>${a.code}</small></div>`).join('');
+  list.classList.add('on');
+}
+function selAgent(n,c){document.getElementById('f-agent').value=n;document.getElementById('f-code').value=c;document.getElementById('ac-list').classList.remove('on');document.getElementById('new-agent-hint').style.display='none';}
+document.addEventListener('click',e=>{if(!e.target.closest('.acw'))document.getElementById('ac-list').classList.remove('on');});
+
+// ========== QUICK ADD FUNCTIONS ==========
+function onQuickAgentInput(){
+  const q=document.getElementById('quick-agent').value.trim().toLowerCase();
+  const list=document.getElementById('quick-ac-list');
+  if(!q){list.classList.remove('on');return;}
+  const m=AGENTS.filter(a=>a.name.toLowerCase().includes(q)).slice(0,6);
+  if(!m.length){list.classList.remove('on');return;}
+  list.innerHTML=m.map(a=>`<div class="aci" onclick="selectQuickAgent('${a.name.replace(/'/g,"\\'")}','${a.code}')">${a.name}<small>${a.code}</small></div>`).join('');
+  list.classList.add('on');
+}
+function selectQuickAgent(n,c){
+  document.getElementById('quick-agent').value=n;
+  document.getElementById('quick-agent').dataset.code=c;
+  document.getElementById('quick-ac-list').classList.remove('on');
+}
+function addQuickBothEntries(){
+  const agentName=document.getElementById('quick-agent').value.trim();
+  const agentCode=document.getElementById('quick-agent').dataset.code||'';
+  const sheetNo=document.getElementById('quick-sn').value.trim();
+  const policyAmount=parseFloat(document.getElementById('quick-policy-amount').value)||0;
+  const policyMode=document.getElementById('quick-policy-mode').value;
+  const memAmount=parseFloat(document.getElementById('quick-mem-amount').value)||0;
+  const memMode=document.getElementById('quick-mem-mode').value;
+  if(!agentName){showToast('⚠️ Enter agent name');return;}
+  if(!agentCode){showToast('⚠️ Select agent from auto-complete');return;}
+  if(policyAmount<=0){showToast('⚠️ Enter valid policy amount');return;}
+  if(memAmount<=0){showToast('⚠️ Enter valid membership fee');return;}
+  const today=new Date().toISOString().split('T')[0];
+  entries.push({
+    id:Date.now(),date:today,sn:sheetNo,agent:agentName,code:agentCode,scheme:'NEW-RD',
+    notes:`Policy ₹${policyAmount} via ${policyMode}`,
+    ci:policyMode==='Cash IN'?policyAmount:0,bi:policyMode==='Bank IN'?policyAmount:0,li:policyMode==='Locker IN'?policyAmount:0,cp:0,lp:0
+  });
+  entries.push({
+    id:Date.now()+1,date:today,sn:sheetNo,agent:agentName,code:agentCode,scheme:'MEMBERSHIP FEE',
+    notes:`Membership ₹${memAmount} via ${memMode}`,
+    ci:memMode==='Cash IN'?memAmount:0,bi:memMode==='Bank IN'?memAmount:0,li:memMode==='Locker IN'?memAmount:0,cp:0,lp:0
+  });
+  save();render();
+  showToast(`✅ Added: Policy + Membership for ${agentName}`);
+  document.getElementById('quick-agent').value='';
+  document.getElementById('quick-agent').dataset.code='';
+  document.getElementById('quick-sn').value='';
+  updateInsights();updateChecklist();
+}
+
+// ========== RENDER FUNCTIONS ==========
+function buildChips(){
+  const chips=document.getElementById('scheme-chips');
+  const top=['ALL',...[...new Set(entries.map(e=>e.scheme||'').filter(Boolean))].slice(0,8)];
+  chips.innerHTML=top.map(s=>`<div class="chip${s===curFilter?' on':''}" onclick="setFilter('${s.replace(/'/g,"\\'")}',this)">${s==='ALL'?'All':s}</div>`).join('');
+}
+function setFilter(f2,el){curFilter=f2;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));if(el)el.classList.add('on');render();}
+function getFiltered(){
+  const q=(document.getElementById('day-q').value||'').toLowerCase();
+  return entries.filter(e=>{
+    const mq=!q||(e.agent||'').toLowerCase().includes(q)||(e.scheme||'').toLowerCase().includes(q)||(e.notes||'').toLowerCase().includes(q)||(e.sn||'').toLowerCase().includes(q);
+    const mf=curFilter==='ALL'||(e.scheme||'')===curFilter;
+    return mq&&mf;
+  });
+}
+function render(){
+  if(quickFilterActive) return;
+  const fil=getFiltered();const t=getTots(fil);
+  document.getElementById('t-ci').textContent='₹'+fn(t.ci);
+  document.getElementById('t-bi').textContent='₹'+fn(t.bi);
+  document.getElementById('t-li').textContent='₹'+fn(t.li);
+  document.getElementById('t-cp').textContent='₹'+fn(t.cp);
+  document.getElementById('t-lp').textContent='₹'+fn(t.lp);
+  document.getElementById('t-en').textContent=fil.length;
+  document.getElementById('ft-ci').textContent=fn(t.ci);
+  document.getElementById('ft-bi').textContent=fn(t.bi);
+  document.getElementById('ft-li').textContent=fn(t.li);
+  document.getElementById('ft-cp').textContent=fn(t.cp);
+  document.getElementById('ft-lp').textContent=fn(t.lp);
+  buildChips();renderCards(fil);renderTable(fil);recalcSum();
+  updateInsights();updateChecklist();
+}
+function renderCards(fil){
+  const c=document.getElementById('cards');
+  if(!fil.length){c.innerHTML=`<div class="empty"><div class="empty-ico">${entries.length?'🔍':'📭'}</div><p>${entries.length?'No entries match filter.':'No entries yet. Tap ➕ to begin.'}</p></div>`;return;}
+  const grps={};
+  fil.forEach(e=>{const k=e.date||'No Date';if(!grps[k])grps[k]=[];grps[k].push(e);});
+  const keys=Object.keys(grps).sort((a,b)=>b.localeCompare(a));
+  c.innerHTML=keys.map(dk=>{
+    const g=grps[dk];const gt=getTots(g);const ti=gt.ci+gt.bi+gt.li;
+    const disp=dk==='No Date'?'No Date':new Date(dk+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',weekday:'short'});
+    const bk=`<div class="day-bk"><div class="day-bk-cell" style="background:#f0fdf4"><div class="day-bk-l">Cash IN</div><div class="day-bk-v" style="color:#15803d">${gt.ci?f(gt.ci):'–'}</div></div><div class="day-bk-cell" style="background:#eff6ff"><div class="day-bk-l">Bank IN</div><div class="day-bk-v" style="color:var(--bl)">${gt.bi?f(gt.bi):'–'}</div></div><div class="day-bk-cell" style="background:#f5f3ff"><div class="day-bk-l">Locker IN</div><div class="day-bk-v" style="color:var(--nv)">${gt.li?f(gt.li):'–'}</div></div>${gt.cp?`<div class="day-bk-cell" style="background:#fff1f2"><div class="day-bk-l">Cash PAY</div><div class="day-bk-v" style="color:var(--rd)">${f(gt.cp)}</div></div>`:''}${gt.lp?`<div class="day-bk-cell" style="background:#fff7ed"><div class="day-bk-l">Locker PAY</div><div class="day-bk-v" style="color:#92400e">${f(gt.lp)}</div></div>`:''}</div>`;
+    const cards=g.map(e=>{
+      const ri=entries.indexOf(e);const ia=needsAgent(e.scheme);
+      const isPending=ia&&e.code&&(e.code.toUpperCase()==='PENDING'||e.code.toUpperCase()==='NEW LIA');
+      return`<div class="ec"><div class="ec-top"><div class="ec-main"><div class="ec-head">${e.sn?`<span class="ec-sn">SN:${e.sn}</span>`:''}<span class="ec-title">${ia?(e.agent||'—'):(e.scheme||'—')}</span></div><div class="ec-tags">${ia&&e.code?`<span class="tag ${isPending?'tag-pending':'tag-code'}">${e.code}</span>`:''}<span class="tag tag-scheme">${e.scheme||'—'}</span>${!ia?'<span class="tag tag-na">📌 No Agent</span>':''}${e.notes?`<span class="tag tag-note">📝 ${e.notes}</span>`:''}</div></div><div class="ec-acts"><button class="ib du" onclick="dupEntry(${ri})">📋</button><button class="ib ed" onclick="openEdit(${ri})">✏️</button><button class="ib dl" onclick="delEntry(${ri})">🗑️</button></div></div><div class="ec-amts"><div class="ca"><div class="ca-l">Cash IN</div><div class="ca-v ${e.ci?'v-ci':'v-z'}">${f(e.ci)}</div></div><div class="ca"><div class="ca-l">Bank IN</div><div class="ca-v ${e.bi?'v-bi':'v-z'}">${f(e.bi)}</div></div><div class="ca"><div class="ca-l">Locker IN</div><div class="ca-v ${e.li?'v-li':'v-z'}">${f(e.li)}</div></div><div class="ca"><div class="ca-l">Cash PAY</div><div class="ca-v ${e.cp?'v-cp':'v-z'}">${f(e.cp)}</div></div><div class="ca"><div class="ca-l">Locker PAY</div><div class="ca-v ${e.lp?'v-lp':'v-z'}">${f(e.lp)}</div></div><div class="ca"><div class="ca-l">Row#</div><div class="ca-v v-z" style="font-size:11px">${ri+4}</div></div></div></div>`;
+    }).join('');
+    return`<div class="dg"><div class="dg-l"><div class="dg-d">${disp}</div><div class="dg-s">${g.length} ${g.length===1?'entry':'entries'}</div></div><div class="dg-r">↑ ${f(ti)||'₹0'}</div></div>${bk}${cards}`;
+  }).join('');
+}
+function renderTable(fil){
+  document.getElementById('day-tbody').innerHTML=fil.map(e=>{
+    const ri=entries.indexOf(e);const ia=needsAgent(e.scheme);
+    return`<tr><td class="tc2" style="color:#94a3b8">${ri+4}</td><td class="tc2" style="color:#0369a1;font-weight:700">${e.sn||'—'}</td><td class="tc2 tb">${e.date||'—'}</td><td class="tn">${ia?(e.agent||'—'):(e.scheme||'—')}</td><td class="tc2 tg">${ia?(e.code||'—'):'—'}</td><td class="tc2" style="font-size:10px">${e.scheme||'—'}</td><td class="${e.ci?'tr':'tdim'}">${e.ci?fn(e.ci):'–'}</td><td class="${e.bi?'tr':'tdim'}">${e.bi?fn(e.bi):'–'}</td><td class="${e.li?'tr':'tdim'}">${e.li?fn(e.li):'–'}</td><td class="${e.cp?'tr':'tdim'}" style="${e.cp?'color:var(--rd)':''}">${e.cp?fn(e.cp):'–'}</td><td class="${e.lp?'tr':'tdim'}">${e.lp?fn(e.lp):'–'}</td><td class="tc2"><button class="ib du" onclick="dupEntry(${ri})" style="display:inline-flex;width:24px;height:24px;font-size:11px">📋</button><button class="ib ed" onclick="openEdit(${ri})" style="display:inline-flex;width:24px;height:24px;font-size:11px">✏️</button><button class="ib dl" onclick="delEntry(${ri})" style="display:inline-flex;width:24px;height:24px;font-size:11px">🗑️</button></td></tr>`;
+  }).join('');
+}
+function setSumToday(){document.getElementById('sum-date').value=new Date().toISOString().split('T')[0];recalcSum();}
+function recalcSum(){
+  const sd=document.getElementById('sum-date');
+  const selDate=sd?sd.value:'';
+  const de=selDate?entries.filter(e=>e.date===selDate):entries;
+  const t=getTots(de);
+  const oc=parseFloat(document.getElementById('s-oc').value)||0;
+  const ob=parseFloat(document.getElementById('s-ob').value)||0;
+  const ol=parseFloat(document.getElementById('s-ol').value)||0;
+  document.getElementById('s-rc').textContent=fn(t.ci);
+  document.getElementById('s-rb').textContent=fn(t.bi);
+  document.getElementById('s-rl').textContent=fn(t.li);
+  document.getElementById('s-pc').textContent=fn(t.cp);
+  document.getElementById('s-pb').textContent='0';
+  document.getElementById('s-pl').textContent=fn(t.lp);
+  document.getElementById('s-cc').textContent=fn(oc+t.ci-t.cp);
+  document.getElementById('s-cb').textContent=fn(ob+t.bi);
+  document.getElementById('s-cl').textContent=fn(ol+t.li-t.lp);
+  const ssub=document.getElementById('sum-ssub');
+  if(ssub)ssub.textContent=selDate?'Showing: '+new Date(selDate+'T00:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'short',year:'numeric'})+' ('+de.length+' entries)':'Select a date above';
+  save();
+}
+function renderAna(){
+  const el=document.getElementById('ana-out');
+  if(anaView==='agent'){
+    const map={};
+    entries.forEach(e=>{const k=e.agent||'No Agent';if(!map[k])map[k]={ci:0,bi:0,li:0};map[k].ci+=e.ci||0;map[k].bi+=e.bi||0;map[k].li+=e.li||0;});
+    const sorted=Object.entries(map).sort((a,b)=>(b[1].ci+b[1].bi+b[1].li)-(a[1].ci+a[1].bi+a[1].li));
+    el.innerHTML='<div class="ana-ttl">Agent-wise Totals</div>'+sorted.map(([name,d])=>`<div class="day-row"><div><div class="dr-d">${name}</div></div><div class="dr-in">${f(d.ci+d.bi+d.li)}</div></div>`).join('');
+  }else if(anaView==='day'){
+    const map={};
+    entries.forEach(e=>{const k=e.date||'No Date';if(!map[k])map[k]=0;map[k]+=(e.ci||0)+(e.bi||0)+(e.li||0);});
+    const sorted=Object.entries(map).sort((a,b)=>b[0].localeCompare(a[0]));
+    el.innerHTML='<div class="ana-ttl">Day-wise Totals</div>'+sorted.map(([date,total])=>`<div class="day-row"><div><div class="dr-d">${date}</div></div><div class="dr-in">${f(total)}</div></div>`).join('');
+  }else{
+    const map={};
+    entries.forEach(e=>{const k=e.scheme||'No Scheme';if(!map[k])map[k]=0;map[k]+=(e.ci||0)+(e.bi||0)+(e.li||0);});
+    const sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+    el.innerHTML='<div class="ana-ttl">Scheme-wise Totals</div>'+sorted.map(([sch,total])=>`<div class="day-row"><div><div class="dr-d">${sch}</div></div><div class="dr-in">${f(total)}</div></div>`).join('');
+  }
+}
+function renderDeno(){
+  const ve=document.getElementById('vault-rows'),me=document.getElementById('move-rows'),re=document.getElementById('rt-rows');
+  ve.innerHTML='';me.innerHTML='';re.innerHTML='';
+  let vt=0,mt=0,rt=0;
+  DENO_ROWS.forEach((r,i)=>{
+    const val=dv(r.d),net=r.c+r.i-r.o,diff=r.i-r.o;
+    vt+=val*r.c;mt+=diff;rt+=val*net;
+    const bg=i%2===0?'#fff':'var(--lb)';
+    ve.innerHTML+=`<div class="dr vr" style="background:${bg}"><div class="dc dn">${r.d}</div><div class="dc inp ve"><input type="number" id="vc-${i}" value="${r.c}" onblur="updVC(${i},this.value)"></div><div class="dc" id="vn-${i}">${net}</div><div class="dc am">₹${(val*net).toLocaleString('en-IN')}</div></div>`;
+    me.innerHTML+=`<div class="dr mr" style="background:${bg}"><div class="dc dn">${r.d}</div><div class="dc inp"><input type="number" id="mi-${i}" value="${r.i||''}" onblur="updM(${i},'i',this.value)"></div><div class="dc inp"><input type="number" id="mo-${i}" value="${r.o||''}" onblur="updM(${i},'o',this.value)"></div><div class="dc ${diff>0?'np':diff<0?'nn':''}" id="mn-${i}">${diff!==0?(diff>0?'+':'')+diff:''}</div></div>`;
+    re.innerHTML+=`<div class="rt-row" style="background:${bg}"><div class="rt-c dn">${r.d}</div><div class="rt-c">${r.c}</div><div class="rt-c">${diff!==0?(diff>0?'+':'')+diff:'–'}</div><div class="rt-c">₹${(val*net).toLocaleString('en-IN')}</div></div>`;
+  });
+  document.getElementById('v-tot').textContent='₹'+vt.toLocaleString('en-IN');
+  document.getElementById('m-tot').textContent=mt.toLocaleString('en-IN');
+  document.getElementById('rt-tot').textContent='₹'+rt.toLocaleString('en-IN');
+}
+function updVC(idx,val){DENO_ROWS[idx].c=parseInt(val)||0;save();renderDeno();}
+function updM(idx,type,val){const n=parseInt(val)||0;if(type==='i')DENO_ROWS[idx].i=n;else DENO_ROWS[idx].o=n;save();renderDeno();}
+function openAgentAdd(idx){agEditIdx=idx!==undefined?idx:-1;document.getElementById('mo-agent-ttl').textContent=agEditIdx>=0?'✏️ Edit Agent':'➕ Add New Agent';document.getElementById('ag-name').value=agEditIdx>=0?AGENTS[agEditIdx].name:'';document.getElementById('ag-code').value=agEditIdx>=0?AGENTS[agEditIdx].code:'';document.getElementById('mo-agent').classList.add('on');}
+function saveAgent(){const name=document.getElementById('ag-name').value.trim().toUpperCase();const code=document.getElementById('ag-code').value.trim();if(!name){showToast('⚠️ Name required');return;}if(!code){showToast('⚠️ Code required');return;}if(agEditIdx>=0){AGENTS[agEditIdx]={name,code};showToast('✅ Agent updated');}else{if(AGENTS.find(a=>a.name===name&&a.code===code)){showToast('⚠️ Already exists');return;}AGENTS.push({name,code});showToast('✅ '+name+' added');}save();closeMo('mo-agent');renderAgents(document.getElementById('ag-q').value);document.getElementById('ag-sub').textContent=AGENTS.length+' agents registered';updateInsights();}
+function delAgent(idx){showConfirm('🗑️','Remove Agent?','Remove "'+AGENTS[idx].name+'"?','Remove',()=>{AGENTS.splice(idx,1);save();renderAgents(document.getElementById('ag-q').value);document.getElementById('ag-sub').textContent=AGENTS.length+' agents registered';updateInsights();showToast('🗑️ Agent removed');});}
+function renderAgents(q2){const q=(q2||'').toLowerCase();const fil=AGENTS.map((a,i)=>({...a,ri:i})).filter(a=>!q||a.name.toLowerCase().includes(q)||a.code.toLowerCase().includes(q));document.getElementById('ag-cnt').textContent='Showing '+fil.length+' of '+AGENTS.length+' agents';document.getElementById('ag-sub').textContent=AGENTS.length+' agents registered';document.getElementById('ag-list').innerHTML=fil.map(a=>`<div class="ag-card"><div><div class="ag-name">${a.name}${a.ri>=3?' <span class="new-b">NEW</span>':''}</div><div class="ag-idx">#${a.ri+1}</div></div><div style="display:flex;align-items:center;gap:6px"><span class="ag-code">${a.code}</span><button class="ib ed" onclick="openAgentAdd(${a.ri})" style="width:26px;height:26px;font-size:12px">✏️</button><button class="ib dl" onclick="delAgent(${a.ri})" style="width:26px;height:26px;font-size:12px">🗑️</button></div></div>`).join('');}
+function openSchemeAdd(idx){schEditIdx=idx!==undefined?idx:-1;document.getElementById('mo-scheme-ttl').textContent=schEditIdx>=0?'✏️ Edit Scheme':'➕ Add Scheme / Category';document.getElementById('sch-name').value=schEditIdx>=0?SCHEMES[schEditIdx].n:'';document.getElementById('sch-type').value=schEditIdx>=0?(SCHEMES[schEditIdx].a?'agent':'noagent'):'agent';document.getElementById('mo-scheme').classList.add('on');}
+function saveScheme(){const name=document.getElementById('sch-name').value.trim().toUpperCase();const na=document.getElementById('sch-type').value==='agent';if(!name){showToast('⚠️ Name required');return;}if(schEditIdx>=0){SCHEMES[schEditIdx]={n:name,a:na};showToast('✅ Scheme updated');}else{if(SCHEMES.find(s=>s.n===name)){showToast('⚠️ Already exists');return;}SCHEMES.push({n:name,a:na});showToast('✅ "'+name+'" added');}save();closeMo('mo-scheme');renderSchemes();}
+function delScheme(idx){if(idx<DEFAULT_SCHEMES.length){showToast('⚠️ Cannot delete built-in schemes');return;}showConfirm('🗑️','Delete Scheme?','Delete "'+SCHEMES[idx].n+'"?','Delete',()=>{SCHEMES.splice(idx,1);save();renderSchemes();showToast('🗑️ Scheme deleted');});}
+function renderSchemes(){document.getElementById('sch-list').innerHTML=SCHEMES.map((s,i)=>`<div class="sch-item"><div class="sch-name">${s.n}</div><span class="sch-type ${s.a?'agent':'noagent'}">${s.a?'👤 Agent':'📌 No Agent'}</span><div style="display:flex;gap:4px"><button class="ib ed" onclick="openSchemeAdd(${i})" style="width:26px;height:26px;font-size:11px">✏️</button>${i>=DEFAULT_SCHEMES.length?`<button class="ib dl" onclick="delScheme(${i})" style="width:26px;height:26px;font-size:11px">🗑️</button>`:''}</div></div>`).join('');}
+function buildPayload(){const ob={cash:parseFloat(document.getElementById('s-oc').value)||0,bank:parseFloat(document.getElementById('s-ob').value)||0,locker:parseFloat(document.getElementById('s-ol').value)||0};return JSON.stringify({v:11,curMonth,entries,openBal:ob,deno:DENO_ROWS.map(r=>({d:r.d,c:r.c,i:r.i,o:r.o})),customAgents:AGENTS.slice(3),customSchemes:SCHEMES.slice(DEFAULT_SCHEMES.length),lastBackup});}
+function doBackup(silent){const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet([['BACKUP_JSON'],[buildPayload()]]);XLSX.utils.book_append_sheet(wb,ws,'BACKUP');XLSX.writeFile(wb,`BACKUP_${curMonth}_${new Date().toISOString().split('T')[0]}.xlsx`);lastBackup=Date.now();save();checkReminders();updateChecklist();if(!silent)showToast('✅ Backup saved!');}
+function doExport(){if(!entries.length){showToast('⚠️ No entries to export');return;}const wb=XLSX.utils.book_new();const rows=[['Date','SN','Agent','Code','Scheme','Notes','Cash IN','Bank IN','Locker IN','Cash PAY','Locker PAY'],...entries.map(e=>[e.date,e.sn,e.agent,e.code,e.scheme,e.notes,e.ci,e.bi,e.li,e.cp,e.lp])];XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),'DAYBOOK');XLSX.writeFile(wb,`DAYBOOK_${curMonth}.xlsx`);showToast('✅ Exported');}
+function doDenoExport(){const wb=XLSX.utils.book_new();const rows=[['Denomination','Count','IN','OUT','Net','Amount'],...DENO_ROWS.map(r=>{const val=dv(r.d);return[r.d,r.c,r.i,r.o,r.i-r.o,val*(r.c+r.i-r.o)]})];XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),'DENO');XLSX.writeFile(wb,`DENO_${curMonth}.xlsx`);showToast('✅ DENO exported');}
+function doImport(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(ev){try{const wb=XLSX.read(ev.target.result,{type:'array'});if(wb.SheetNames.includes('BACKUP')){const ws=wb.Sheets['BACKUP'];const rows=XLSX.utils.sheet_to_json(ws,{header:1});const jr=rows.find(r=>r[0]&&String(r[0]).startsWith('{"v"'));if(jr){const p=JSON.parse(jr[0]);entries=p.entries||[];const ob=p.openBal||{};document.getElementById('s-oc').value=ob.cash||0;document.getElementById('s-ob').value=ob.bank||0;document.getElementById('s-ol').value=ob.locker||0;if(p.deno)p.deno.forEach(pd=>{const r=DENO_ROWS.find(x=>x.d===pd.d);if(r){r.c=pd.c||0;r.i=pd.i||0;r.o=pd.o||0;}});if(p.customAgents)p.customAgents.forEach(ca=>{if(!AGENTS.find(a=>a.name===ca.name))AGENTS.push(ca);});if(p.customSchemes)p.customSchemes.forEach(cs=>{if(!SCHEMES.find(s=>s.n===cs.n))SCHEMES.push(cs);});curMonth=p.curMonth||'APRIL 2026';setMonth(curMonth);save();render();renderDeno();renderAgents('');updateInsights();updateChecklist();showToast('✅ Restored! '+entries.length+' entries.');}else showToast('⚠️ No backup data found');}else showToast('⚠️ Not a valid backup file');}catch(err){showToast('❌ Error: '+err.message);}input.value='';};reader.readAsArrayBuffer(file);}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('pwa-bar').classList.add('show');});
+function installPWA(){if(!deferredPrompt){showToast('Open in Chrome → ⋮ → Add to Home screen');return;}deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('pwa-bar').classList.remove('show');});}
+window.addEventListener('appinstalled',()=>{showToast('✅ Daybook Pro installed!');});
+(function(){const m={name:'Daybook Pro',short_name:'DaybookPro',start_url:'./',display:'standalone',background_color:'#1F3864',theme_color:'#1F3864',icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231F3864'/%3E%3Ctext x='256' y='340' text-anchor='middle' font-size='280' font-family='Arial'%3E%F0%9F%93%92%3C/text%3E%3C/svg%3E",sizes:'512x512',type:'image/svg+xml'}]};const blob=new Blob([JSON.stringify(m)],{type:'application/json'});document.getElementById('pwa-manifest').href=URL.createObjectURL(blob);})();
+if('serviceWorker' in navigator){const sw=`const C='db-v11';const A=[self.location.href];self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(A)).then(()=>self.skipWaiting()));});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{if(res&&res.status===200&&res.type==='basic'){const cl=res.clone();caches.open(C).then(c=>c.put(e.request,cl));}return res;})));});`;const blob=new Blob([sw],{type:'text/javascript'});navigator.serviceWorker.register(URL.createObjectURL(blob),{scope:'./'}).catch(()=>{});}
+document.getElementById('hdr-date').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+loadData();
+</script>
+</body>
+</html>
